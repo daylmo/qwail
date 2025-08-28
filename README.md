@@ -1,6 +1,9 @@
 # Qwail
 
 ---
+<p align=center>
+  Test project, ecommerce platform built with python and fastapi.
+</p>
 
 <div align=center>
     <a href="https://github.com/daylmo/qwail/actions/workflows/codeql.yml">
@@ -27,7 +30,3 @@
         <img src="https://img.shields.io/badge/pytest-8.4.1-blue?logo=pytest&logoColor=%230A9EDC&label=Pytest" alt="Pytest">
     </a>
 </div>
-
-<p align=center>
-  Test project, ecommerce platform built with python and fastapi.
-</p>
