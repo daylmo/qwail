@@ -1,6 +1,11 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="Qwail")
+from qwail.core.config import settings
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    debug=settings.DEBUG,
+)
 
 
 @app.get("/")
