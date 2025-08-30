@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 
+from qwail import VERSION
 from qwail.core.config import settings
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     debug=settings.DEBUG,
+    version=VERSION,
 )
 
 

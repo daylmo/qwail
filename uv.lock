@@ -898,8 +898,7 @@ wheels = [
 
 [[package]]
 name = "qwail"
-version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "alembic", marker = "platform_python_implementation != 'PyPy'" },
     { name = "fastapi", extra = ["all"], marker = "platform_python_implementation != 'PyPy'" },

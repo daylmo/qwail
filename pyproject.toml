@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qwail"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Test project, Ecommerce platform."
 readme = "README.md"
 authors = [
@@ -30,11 +30,32 @@ dev = [
     "ruff>=0.12.10",
 ]
 
+[project.scripts]
+qwail = "qwail.cli:main"
+
+[project.urls]
+"Source code" = "https://github.com/daylmo/qwail"
+Github = "https://github.com/daylmo/qwail.git"
+
+[tool.hatch.build]
+packages = ["qwail"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "pkg/*.py",
+  "/tests",
+  "README.md",
+]
+
+[tool.hatch.version]
+path = "qwail/__init__.py"
+
 [tool.uv]
 environments = [
   "platform_python_implementation != 'PyPy'"
 ]
-package = false
+# package = false
+default-groups = ["dev"]  # Explicitly set to empty string to disable installing dependency-groups.
 
 [tool.mypy]
 allow_untyped_globals = true
