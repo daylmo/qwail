@@ -147,7 +147,7 @@ known-first-party = ["qwail"]
 
 [tool.coverage.run]
 branch = true
-source = "qwail"
+source = ["qwail"]
 omit = [
     "*/migrations/*",
     "*/tests/*",
