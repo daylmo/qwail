@@ -30,22 +30,10 @@ dev = [
     "ruff>=0.12.10",
 ]
 
-[project.scripts]
-qwail = "qwail.cli:main"
-
 [project.urls]
 "Source code" = "https://github.com/daylmo/qwail"
 Github = "https://github.com/daylmo/qwail.git"
 
-[tool.hatch.build]
-packages = ["qwail"]
-
-[tool.hatch.build.targets.sdist]
-include = [
-  "pkg/*.py",
-  "/tests",
-  "README.md",
-]
 
 [tool.hatch.version]
 path = "qwail/__init__.py"
@@ -54,7 +42,7 @@ path = "qwail/__init__.py"
 environments = [
   "platform_python_implementation != 'PyPy'"
 ]
-# package = false
+package = false
 default-groups = ["dev"]  # Explicitly set to empty string to disable installing dependency-groups.
 
 [tool.mypy]
