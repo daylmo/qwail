@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False  # XXX: Definitely set this to False in production.
 
     # Database setup
-    # For `sqlite` compatibility in development `None` values are allowed.
+    # For compatibility with `sqlite` database during development, `None` values are allowed.
     # But in production use some other RDBMS like `Postgresql` or `MySQL`.
     DB_USER: str | None = None
     DB_PASS: str | None = None
