@@ -1,0 +1,29 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v6.0.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: check-yaml
+  - id: check-toml
+  - id: check-added-large-files
+  - id: no-commit-to-branch
+    args: ["--branch", "main", "--branch", "stable"]
+
+- repo: local
+  hooks:
+  - id: lint-all-files
+    name: lint
+    entry: scripts/lint.sh
+    language: python
+    types: [python]
+    pass_filenames: false
+
+  - id: format-all-files
+    name: format
+    entry: scripts/format.sh
+    language: python
+    types: [python]
+    pass_filenames: false
