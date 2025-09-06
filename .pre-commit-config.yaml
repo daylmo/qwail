@@ -1,6 +1,7 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
+# Pre-commit official hooks
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v6.0.0
   hooks:
@@ -12,18 +13,27 @@ repos:
   - id: no-commit-to-branch
     args: ["--branch", "main", "--branch", "stable"]
 
-- repo: local
+# Update package version to match uv locked version
+- repo: https://github.com/tsvikas/sync-with-uv
+  rev: v0.3.1  # replace with the latest version
   hooks:
-  - id: lint-all-files
-    name: lint
-    entry: scripts/lint.sh
-    language: python
-    types: [python]
-    pass_filenames: false
+  - id: sync-with-uv
 
-  - id: format-all-files
-    name: format
-    entry: scripts/format.sh
-    language: python
-    types: [python]
-    pass_filenames: false
+# Ruff pre-commit hook
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Ruff version.
+  rev: v0.12.12
+  hooks:
+  # Run the linter.
+  - id: ruff-check
+    args: [ --fix ]
+  # Run the formatter.
+  - id: ruff-format
+
+# Commitizen, enforce standarized commit conventions.
+- repo: https://github.com/commitizen-tools/commitizen
+  rev: v4.8.4  # Replace with latest tag
+  hooks:
+  - id: commitizen
+  - id: commitizen-branch
+    stages: [pre-push]

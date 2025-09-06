@@ -1,4 +1,3 @@
-# Project version
-__version__ = "v0.1.0"
+from __version__ import __version__
 
 VERSION = __version__
