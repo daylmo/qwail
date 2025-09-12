@@ -1,0 +1,14 @@
+# Package manager lock files
+*.lock linguist-generated -merge
+
+# Generated alembic migration files
+*_auto_*.py linguist-generated
+
+# Generated locale pot files
+*.po -merge
+
+# Software made SVG files
+*.svg linguist-generated
+
+# Automatically resolve changelog conflicts
+CHANGELOG.md merge=union

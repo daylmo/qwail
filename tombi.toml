@@ -1,0 +1,33 @@
+# Tombi config for this project.
+#
+# This file is for checking if the JsonSchema is correct.
+#
+
+toml-version = "v1.0.0"
+
+[files]
+exclude = [
+  "editors/intellij/src/test/testData/*",
+]
+
+[format]
+
+[lint]
+[lint.rules]
+key-empty = "warn"
+
+[lsp]
+code-action.enabled = true
+
+[schema]
+enabled = true
+catalog = {
+  paths = [
+    "tombi://json.schemastore.org/api/json/catalog.json",
+    "https://json.schemastore.org/api/json/catalog.json",
+  ],
+}
+
+[[schemas]]
+path = "tombi://json.schemastore.org/tombi.json"
+include = ["tombi.toml", "tombi/config.toml"]
