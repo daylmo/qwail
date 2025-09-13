@@ -1046,6 +1046,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pytest-mypy"
+version = "1.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "filelock", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "mypy", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "pytest", marker = "platform_python_implementation != 'PyPy'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b0/50/3ce149b469e27848c1dc354553b17774f9dde0140625f5a4130bd21e1052/pytest_mypy-1.0.1.tar.gz", hash = "sha256:3f5fcaff75c80dccc6b68cf5ecc28e1bbe71e95309469eb7a28bf408ce55c074", size = 15975, upload-time = "2025-04-02T19:31:16.151Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/bf/93/25ed3c02e15c4ef1b04cbda7c708ffc5da755986aaacfb48db1f9e84a996/pytest_mypy-1.0.1-py3-none-any.whl", hash = "sha256:ad7133c9b92c802e032f2596590ebede7eea7c418e61d60d5cdd571b55c72056", size = 8701, upload-time = "2025-04-02T19:31:14.914Z" },
+]
+
+[[package]]
 name = "python-dateutil"
 version = "2.9.0.post0"
 source = { registry = "https://pypi.org/simple" }
@@ -1140,6 +1154,7 @@ test = [
     { name = "pytest-asyncio", marker = "platform_python_implementation != 'PyPy'" },
     { name = "pytest-benchmark", marker = "platform_python_implementation != 'PyPy'" },
     { name = "pytest-cov", marker = "platform_python_implementation != 'PyPy'" },
+    { name = "pytest-mypy", marker = "platform_python_implementation != 'PyPy'" },
 ]
 
 [package.metadata]
@@ -1169,6 +1184,7 @@ test = [
     { name = "pytest-asyncio", specifier = ">=1.2.0" },
     { name = "pytest-benchmark", specifier = ">=5.1.0" },
     { name = "pytest-cov", specifier = ">=7.0.0" },
+    { name = "pytest-mypy", specifier = ">=1.0.1" },
 ]
 
 [[package]]

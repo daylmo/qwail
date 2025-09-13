@@ -36,6 +36,7 @@ test = [
   "pytest-asyncio>=1.2.0",
   "pytest-benchmark>=5.1.0",
   "pytest-cov>=7.0.0",
+  "pytest-mypy>=1.0.1",
   "pytest>=8.4.2",
 ]
 
@@ -50,7 +51,7 @@ package = false
 
 [tool.poe.tasks]
 start.help = "Start development server with hot reload"
-start.cmd = "uvicorn qwail.main:app --reload"
+start.cmd = "fastapi dev qwail/main.py"
 
 test.cmd="pytest --reuse-db"
 test.help = "Run tests with db reuse to speed up testing time"
