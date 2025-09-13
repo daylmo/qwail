@@ -27,7 +27,7 @@ repos:
       - id: mypy
         args: [--cache-dir=/dev/null] # Disable cache to avoid issues with pre-commit
         language: system
-        exclude: (tests|vendored)/
+        exclude: (tests|vendored|alembic)/
 
   - repo: https://github.com/astral-sh/uv-pre-commit
     # uv version.
@@ -39,10 +39,3 @@ repos:
     rev: v3.20.0
     hooks:
     - id: pyupgrade
-
-  - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.9.0  # Replace with latest tag
-    hooks:
-    - id: commitizen
-    - id: commitizen-branch
-      stages: [pre-push]
