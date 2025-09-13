@@ -6,3 +6,8 @@ app = FastAPI(
     title="qwail",
     version=VERSION,
 )
+
+
+@app.get('/')
+async def main():
+    return {"message": "Hello Qwail!!"}
