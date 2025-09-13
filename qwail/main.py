@@ -8,6 +8,6 @@ app = FastAPI(
 )
 
 
-@app.get('/')
+@app.get("/")
 async def main():
     return {"message": "Hello Qwail!!"}
