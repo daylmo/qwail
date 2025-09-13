@@ -6,14 +6,13 @@ requires-python = ">=3.13,<3.14"
 authors = [{ name = "Dayal Moirangthem", email = "daylmo@proton.me" }]
 dependencies = [
   "alembic>=1.16.5",
-  "celery>=5.5.3",
+  "celery[redis]>=5.5.3",
   "fastapi[all]>=0.116.1",
   "libpass[argon2,bcrypt]>=1.9.1.post0",
   "loguru>=0.7.3",
   "psycopg[binary]>=3.2.10",
   "python-jose[cryptography]>=3.5.0",
   "sqlalchemy>=2.0.43",
-  "valkey[libvalkey]>=6.1.1",
 ]
 dynamic = ["version"]
 
@@ -21,13 +20,18 @@ dynamic = ["version"]
 dev = [
   "poethepoet>=0.37.0",
   "pre-commit>=4.3.0",
-  "pytest-cov>=7.0.0",
-  "pytest>=8.4.2",
 ]
 lint = [
   "mypy>=1.17.1",
   "ruff>=0.13.0",
   "tombi>=0.6.4",
+]
+test = [
+  "pytest-alembic>=0.12.1",
+  "pytest-asyncio>=1.2.0",
+  "pytest-benchmark>=5.1.0",
+  "pytest-cov>=7.0.0",
+  "pytest>=8.4.2",
 ]
 
 [build-system]
