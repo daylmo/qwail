@@ -60,7 +60,7 @@ jobs:
                         --cov-report=html:test_report/ \
                         --cov-report=json:test_report/cov.json \
                         --failed-first
-                        --junit-xml=test_report/junit.xml \
+                        --junit-xml=junit.xml \
                         --junit_family=xunit2 \
                         tests/
 
@@ -69,3 +69,4 @@ jobs:
         with:
           name: test-report
           path: cov_report/
+          include-hidden-files: true
