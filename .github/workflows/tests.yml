@@ -2,16 +2,22 @@ name: Tests
 
 on:
   push:
-    branches: ["main", "stable", "releases/**/*"]
+    branches:
+      - main
+      - stable
+      - 'releases/**'
 
   pull_request:
-    types: ["opened", "reopened", "synchronize"]
+    types:
+      - opened
+      - reopened
+      - synchronized
 
 permissions:
   contents: read
 
 concurrency:
-  groups: ${{ github.workflows }}-${{ github.ref_head || github.sha }}
+  groups: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref || github.head_ref || github.sha }}
   cancel-in-progress: true
 
 jobs:
@@ -37,9 +43,15 @@ jobs:
       - name: Run tests
         run: |
           uv run pytest --cov=qwail \
-                        --cov-report=html:cov_report/ \
-                        --cov-report=json:cov_report/cov.json \
+                        --cov-report=html:test_report/ \
+                        --cov-report=json:test_report/cov.json \
                         --failed-first
                         --junit-xml=cov_report/junit.xml \
                         --junit_family=xunit2 \
                         tests/
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: cov_report/
