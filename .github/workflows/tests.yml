@@ -11,12 +11,11 @@ on:
       - 'qwail/**'
       - '**.py'
       - 'tests/**'
+      - '.github/**'
 
   pull_request:
     branches:
-      - main
-      - stable
-      - 'releases/**'
+      - '*'
     types:
       - opened
       - reopened
@@ -25,6 +24,7 @@ on:
       - 'qwail/**'
       - '**.py'
       - 'tests/**'
+      - '.github/**'
 
 permissions:
   contents: read
@@ -55,12 +55,12 @@ jobs:
 
       - name: Run tests
         run: |
+          if [ ! -d test_report ]; then mkdir test_report; fi
           uv run pytest --cov=qwail \
                         --cov-report=html:test_report/ \
                         --cov-report=json:test_report/cov.json \
-                        --failed-first
-                        --junit-xml=cov_report/junit.xml \
-                        --junit_family=xunit2 \
+                        --failed-first \
+                        --junit-xml=test_report/junit.xml \
                         tests/
 
       - name: Upload test report
@@ -68,3 +68,4 @@ jobs:
         with:
           name: test-report
           path: cov_report/
+          include-hidden-files: true
