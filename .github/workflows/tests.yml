@@ -55,6 +55,7 @@ jobs:
 
       - name: Run tests
         run: |
+          if [ ! -d test_report ]; then mkdir test_report; fi
           uv run pytest --cov=qwail \
                         --cov-report=html:test_report/ \
                         --cov-report=json:test_report/cov.json \
