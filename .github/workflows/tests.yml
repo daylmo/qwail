@@ -6,8 +6,16 @@ on:
       - main
       - stable
       - 'releases/**'
+    paths:
+      - 'qwail/**'
+      - '**.py'
+      - 'tests/**'
 
   pull_request:
+    branches:
+      - main
+      - stable
+      - 'releases/**'
     types:
       - opened
       - reopened
