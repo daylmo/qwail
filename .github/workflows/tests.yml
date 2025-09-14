@@ -12,6 +12,10 @@ on:
       - opened
       - reopened
       - synchronized
+    paths:
+      - 'qwail/**'
+      - '**.py'
+      - 'tests/**'
 
 permissions:
   contents: read
