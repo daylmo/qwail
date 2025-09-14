@@ -6,6 +6,7 @@ on:
       - main
       - stable
       - 'releases/**'
+      - ci
     paths:
       - 'qwail/**'
       - '**.py'
