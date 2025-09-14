@@ -14,7 +14,6 @@
       <img src="https://github.com/daylmo/qwail/actions/workflows/dependabot/dependabot-updates/badge.svg" alt="Dependabot Updates">
     </a>
   </div>
-  </hr>
   <div align="center">
     <a href="https://results.pre-commit.ci/latest/github/daylmo/qwail/main">
       <img src="https://results.pre-commit.ci/badge/github/daylmo/qwail/main.svg" alt="pre-commit.ci status">
