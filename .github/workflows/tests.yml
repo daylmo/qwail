@@ -1,0 +1,45 @@
+name: Tests
+
+on:
+  push:
+    branches: ["main", "stable", "releases/**/*"]
+
+  pull_request:
+    types: ["opened", "reopened", "synchronize"]
+
+permissions:
+  contents: read
+
+concurrency:
+  groups: ${{ github.workflows }}-${{ github.ref_head || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version-file: ".python-version"
+
+      - uses: astral-sh/setup-uv@v6.6.1
+        with:
+          enable-cache: true
+
+      - name: Install dependencies
+        run: |
+          uv sync --group=test
+          if [ -f uv.lock ]; then uv sync --locked --group=test; fi
+
+      - name: Run tests
+        run: |
+          uv run pytest --cov=qwail \
+                        --cov-report=html:cov_report/ \
+                        --cov-report=json:cov_report/cov.json \
+                        --failed-first
+                        --junit-xml=cov_report/junit.xml \
+                        --junit_family=xunit2 \
+                        tests/
