@@ -10,6 +10,7 @@ on:
       - 'qwail/**'
       - '**.py'
       - 'tests/**'
+      - '.github/**'
 
   pull_request:
     branches:
@@ -22,6 +23,7 @@ on:
       - 'qwail/**'
       - '**.py'
       - 'tests/**'
+      - '.github/**'
 
 permissions:
   contents: read
