@@ -61,7 +61,6 @@ jobs:
                         --cov-report=json:test_report/cov.json \
                         --failed-first \
                         --junit-xml=test_report/junit.xml \
-                        --junit_family=xunit2 \
                         tests/
 
       - name: Upload test report
