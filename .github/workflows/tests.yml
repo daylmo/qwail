@@ -64,7 +64,9 @@ jobs:
                         tests/
 
       - name: Generate badge metadata
-        run: python .github/badge.py
+        run: |
+          uv add jinja2
+          uv run python .github/badge.py
 
       - name: Set artifact name based on branch
         run: |
