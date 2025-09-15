@@ -63,6 +63,9 @@ jobs:
                         --junit-xml=test_report/junit.xml \
                         tests/
 
+      - name: Generate badge metadata
+        run: python .github/badge.py
+
       - name: Set artifact name based on branch
         run: |
           if [[ ${{ github.ref }} == "refs/heads/main" ]]; then
