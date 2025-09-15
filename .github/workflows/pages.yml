@@ -45,6 +45,7 @@ jobs:
           workflow: tests.yml
           branch: main
           name: main-test-report
+          path: 'test-report'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
