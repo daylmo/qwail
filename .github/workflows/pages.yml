@@ -35,12 +35,14 @@ jobs:
 
       - uses: actions/configure-pages@v5
 
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v5.0.0
+      - name: Download Test Report Artifact
+        id: download-test-report-artifact
+        uses: dawidd6/action-download-artifact@v11
         with:
-          name: test-report
-          path: test_report/
-
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: tests.yml
+          branch: main
+          name: main-test-report
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
