@@ -7,4 +7,4 @@ DESCRIPTION = """An ecommerce backend built with fastapi and python.
 * Composable
 * Asynchronous
 
-This project is built with asynchronous first by design."""
+This project is built with asynchronous first design."""

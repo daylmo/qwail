@@ -1,10 +1,16 @@
 from fastapi import FastAPI
 
-from qwail import VERSION
+from qwail import DESCRIPTION, VERSION
+from qwail.core.config import settings
 
 app = FastAPI(
-    title="qwail",
+    title=settings.PROJECT_NAME,
     version=VERSION,
+    description=DESCRIPTION,
+    license_info={
+        "name": "MIT License",
+        "identifier": "MIT",
+    },
 )
 
 

@@ -51,10 +51,10 @@ package = false
 
 [tool.poe.tasks]
 start.help = "Start development server with hot reload"
-start.cmd = "fastapi dev qwail/main.py"
+start.cmd = "uvicorn 'qwail.main:app' --reload"
 
 test.cmd="pytest --cov=qwail"
-test.help = "Run tests with db reuse to speed up testing time"
+test.help = "Run tests with pytest and report coverage"
 
 [tool.hatch.version]
 path = "qwail/__init__.py"
