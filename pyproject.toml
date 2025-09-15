@@ -53,7 +53,7 @@ package = false
 start.help = "Start development server with hot reload"
 start.cmd = "fastapi dev qwail/main.py"
 
-test.cmd="pytest --reuse-db"
+test.cmd="pytest --cov=qwail"
 test.help = "Run tests with db reuse to speed up testing time"
 
 [tool.hatch.version]
