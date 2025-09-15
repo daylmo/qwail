@@ -1,7 +1,5 @@
 <h1 align="center">Qwail</h1>
 
----
-
 <div align="center">
   <div align="center">
     <a href="https://github.com/daylmo/qwail/actions/workflows/codeql.yml">
@@ -26,7 +24,5 @@
     </a>
   </div>
 </div>
-
----
 
 Just testing github.
