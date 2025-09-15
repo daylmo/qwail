@@ -2,8 +2,11 @@
 name: Deploy Pages
 
 on:
-  # Runs on pushes targeting the default branch
-  push:
+  workflow_run:
+    workflows:
+      - Tests
+    types:
+      - completed
     branches:
       - main
 
