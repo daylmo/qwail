@@ -1,0 +1,40 @@
+# compose.yml
+version: "0.1"
+
+services:
+  qwail:
+    build:
+      dockerfile: Dockerfile
+    command: sleep infinity
+    env_file:
+      - example.env
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+
+  db:
+    image: library/postgres:17-alpine
+    ports:
+     - 5432:5432
+    restart: unless-stopped
+    volumes:
+      - qwail-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=qwail
+      - POSTGRES_PASSWORD=qwail
+
+  redis:
+    image: library/redis:8.2-alpine
+    restart: unless-stopped
+    volumes:
+      - qwail-redis:/data
+    ports:
+      - 6379:6379
+
+volumes:
+  qwail-db:
+    driver: local
+  qwail-redis:
+    driver: local
