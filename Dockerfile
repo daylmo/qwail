@@ -20,4 +20,4 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-CMD ["fastapi", "run", "qwail/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "fastapi", "run", "qwail/main.py", "--host", "0.0.0.0", "--port", "8000"]
