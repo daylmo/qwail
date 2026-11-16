@@ -108,7 +108,9 @@ fastapi-project
 ```python
 from src.auth import constants as auth_constants
 from src.notifications import service as notification_service
-from src.posts.constants import ErrorCode as PostsErrorCode  # in case we have Standard ErrorCode in constants module of each package
+from src.posts.constants import (
+    ErrorCode as PostsErrorCode,
+)  # in case we have Standard ErrorCode in constants module of each package
 ```
 
 ## Async Routes
@@ -138,22 +140,27 @@ router = APIRouter()
 
 @router.get("/terrible-ping")
 async def terrible_ping():
-    time.sleep(10) # I/O blocking operation for 10 seconds, the whole process will be blocked
+    time.sleep(
+        10
+    )  # I/O blocking operation for 10 seconds, the whole process will be blocked
 
     return {"pong": True}
+
 
 @router.get("/good-ping")
 def good_ping():
-    time.sleep(10) # I/O blocking operation for 10 seconds, but in a separate thread for the whole `good_ping` route
+    time.sleep(
+        10
+    )  # I/O blocking operation for 10 seconds, but in a separate thread for the whole `good_ping` route
 
     return {"pong": True}
+
 
 @router.get("/perfect-ping")
 async def perfect_ping():
-    await asyncio.sleep(10) # non-blocking I/O operation
+    await asyncio.sleep(10)  # non-blocking I/O operation
 
     return {"pong": True}
-
 ```
 **What happens when we call:**
 1. `GET /terrible-ping`
@@ -208,9 +215,9 @@ from pydantic import AnyUrl, BaseModel, EmailStr, Field
 
 
 class MusicBand(str, Enum):
-   AEROSMITH = "AEROSMITH"
-   QUEEN = "QUEEN"
-   ACDC = "AC/DC"
+    AEROSMITH = "AEROSMITH"
+    QUEEN = "QUEEN"
+    ACDC = "AC/DC"
 
 
 class UserBase(BaseModel):
@@ -218,7 +225,9 @@ class UserBase(BaseModel):
     username: str = Field(min_length=1, max_length=128, pattern="^[A-Za-z0-9-_]+$")
     email: EmailStr
     age: int = Field(ge=18, default=None)  # must be greater or equal to 18
-    favorite_band: MusicBand | None = None  # only "AEROSMITH", "QUEEN", "AC/DC" values are allowed to be inputted
+    favorite_band: MusicBand | None = (
+        None  # only "AEROSMITH", "QUEEN", "AC/DC" values are allowed to be inputted
+    )
     website: AnyUrl | None = None
 ```
 ### Custom Base Model
@@ -249,8 +258,6 @@ class CustomModel(BaseModel):
         default_dict = self.model_dump()
 
         return jsonable_encoder(default_dict)
-
-
 ```
 In the example above, we have decided to create a global base model that:
 - Serializes all datetime fields to a standard format with an explicit timezone
@@ -303,7 +310,6 @@ class Config(BaseSettings):
 
 
 settings = Config()
-
 ```
 
 ## Dependencies
@@ -353,6 +359,7 @@ Dependencies can use other dependencies and avoid code repetition for similar lo
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 
+
 async def valid_post_id(post_id: UUID4) -> dict[str, Any]:
     post = await service.get_by_id(post_id)
     if not post:
@@ -362,7 +369,7 @@ async def valid_post_id(post_id: UUID4) -> dict[str, Any]:
 
 
 async def parse_jwt_data(
-    token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token"))
+    token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token")),
 ) -> dict[str, Any]:
     try:
         payload = jwt.decode(token, "JWT_SECRET", algorithms=["HS256"])
@@ -381,11 +388,11 @@ async def valid_owned_post(
 
     return post
 
+
 # router.py
 @router.get("/users/{user_id}/posts/{post_id}", response_model=PostResponse)
 async def get_user_post(post: dict[str, Any] = Depends(valid_owned_post)):
     return post
-
 ```
 ### Decouple & Reuse dependencies. Dependency calls are cached
 Dependencies can be reused multiple times, and they won't be recalculated - FastAPI caches dependency's result within a request's scope by default,
@@ -405,6 +412,7 @@ from fastapi import BackgroundTasks
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 
+
 async def valid_post_id(post_id: UUID4) -> Mapping:
     post = await service.get_by_id(post_id)
     if not post:
@@ -414,7 +422,7 @@ async def valid_post_id(post_id: UUID4) -> Mapping:
 
 
 async def parse_jwt_data(
-    token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token"))
+    token: str = Depends(OAuth2PasswordBearer(tokenUrl="/auth/token")),
 ) -> dict:
     try:
         payload = jwt.decode(token, "JWT_SECRET", algorithms=["HS256"])
@@ -442,7 +450,7 @@ async def valid_active_creator(
         raise UserIsBanned()
 
     if not user["is_creator"]:
-       raise UserNotCreator()
+        raise UserNotCreator()
 
     return user
 
@@ -457,7 +465,6 @@ async def get_user_post(
     """Get post that belong the active user."""
     worker.add_task(notifications_service.send_email, user["id"])
     return post
-
 ```
 
 ### Prefer `async` dependencies
@@ -488,12 +495,14 @@ async def valid_profile_id(profile_id: UUID4) -> Mapping:
 
     return profile
 
+
 # src.creators.dependencies
 async def valid_creator_id(profile: Mapping = Depends(valid_profile_id)) -> Mapping:
     if not profile["is_creator"]:
-       raise ProfileNotCreator()
+        raise ProfileNotCreator()
 
     return profile
+
 
 # src.profiles.router.py
 @router.get("/profiles/{profile_id}", response_model=ProfileResponse)
@@ -501,14 +510,12 @@ async def get_user_profile_by_id(profile: Mapping = Depends(valid_profile_id)):
     """Get profile by id."""
     return profile
 
+
 # src.creators.router.py
 @router.get("/creators/{profile_id}", response_model=ProfileResponse)
-async def get_user_profile_by_id(
-     creator_profile: Mapping = Depends(valid_creator_id)
-):
+async def get_user_profile_by_id(creator_profile: Mapping = Depends(valid_creator_id)):
     """Get creator's profile by id."""
     return creator_profile
-
 ```
 ### FastAPI response serialization
 You may think you can return Pydantic object that matches your route's `response_model` to make some optimizations,
@@ -573,6 +580,7 @@ If you raise a `ValueError` in a Pydantic schema that is directly faced by the c
 # src.profiles.schemas
 from pydantic import BaseModel, field_validator
 
+
 class ProfileCreate(BaseModel):
     username: str
 
@@ -599,7 +607,7 @@ router = APIRouter()
 
 @router.post("/profiles")
 async def get_creator_posts(profile_data: ProfileCreate):
-   pass
+    pass
 ```
 
 ### Docs
@@ -615,7 +623,7 @@ SHOW_DOCS_ENVIRONMENT = ("local", "staging")  # explicit list of allowed envs
 
 app_configs = {"title": "My Cool API"}
 if ENVIRONMENT not in SHOW_DOCS_ENVIRONMENT:
-   app_configs["openapi_url"] = None  # set url for docs as null
+    app_configs["openapi_url"] = None  # set url for docs as null
 
 app = FastAPI(**app_configs)
 ```
@@ -627,6 +635,7 @@ from fastapi import APIRouter, status
 
 router = APIRouter()
 
+
 @router.post(
     "/endpoints",
     response_model=DefaultResponseModel,  # default response pydantic model
@@ -636,7 +645,7 @@ router = APIRouter()
     summary="Summary of the Endpoint",
     responses={
         status.HTTP_200_OK: {
-            "model": OkResponse, # custom pydantic model for 200 response
+            "model": OkResponse,  # custom pydantic model for 200 response
             "description": "Ok Response",
         },
         status.HTTP_201_CREATED: {
@@ -701,6 +710,7 @@ from sqlalchemy.sql.functions import coalesce
 
 from src.database import database, posts, profiles, post_review, products
 
+
 async def get_posts(
     creator_id: UUID4, *, limit: int = 10, offset: int = 0
 ) -> list[dict[str, Any]]:
@@ -711,10 +721,10 @@ async def get_posts(
                 posts.c.slug,
                 posts.c.title,
                 func.json_build_object(
-                   text("'id', profiles.id"),
-                   text("'first_name', profiles.first_name"),
-                   text("'last_name', profiles.last_name"),
-                   text("'username', profiles.username"),
+                    text("'id', profiles.id"),
+                    text("'first_name', profiles.first_name"),
+                    text("'last_name', profiles.last_name"),
+                    text("'username', profiles.username"),
                 ).label("creator"),
             )
         )
@@ -739,6 +749,7 @@ async def get_posts(
     )
 
     return await database.fetch_all(select_query)
+
 
 # src.posts.schemas
 from typing import Any
@@ -768,9 +779,9 @@ router = APIRouter()
 
 @router.get("/creators/{creator_id}/posts", response_model=list[Post])
 async def get_creator_posts(creator: dict[str, Any] = Depends(valid_creator_id)):
-   posts = await service.get_posts(creator["id"])
+    posts = await service.get_posts(creator["id"])
 
-   return posts
+    return posts
 ```
 ### Set tests client async from day 0
 Writing integration tests with DB will most likely lead to messed up event loop errors in the future.
@@ -786,7 +797,9 @@ from src.main import app  # inited FastAPI app
 async def client() -> AsyncGenerator[TestClient, None]:
     host, port = "127.0.0.1", "9000"
 
-    async with AsyncClient(transport=ASGITransport(app=app, client=(host, port)), base_url="http://test") as client:
+    async with AsyncClient(
+        transport=ASGITransport(app=app, client=(host, port)), base_url="http://test"
+    ) as client:
         yield client
 
 
